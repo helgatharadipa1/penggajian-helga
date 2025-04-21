@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h3>{{ title }}</h3>
+  <form method="POST">
+    <div class="mb-3">
+      <label for="nama" class="form-label">Nama Karyawan</label>
+      <input type="text" class="form-control" id="nama" name="nama" value="{{ karyawan.nama if karyawan else '' }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="jabatan" class="form-label">Jabatan</label>
+      <select class="form-select" id="jabatan" name="jabatan" required>
+        <option value="">-- Pilih Jabatan --</option>
+        <option value="Staff" {% if karyawan and karyawan.jabatan == 'Staff' %}selected{% endif %}>Staff</option>
+        <option value="Supervisor" {% if karyawan and karyawan.jabatan == 'Supervisor' %}selected{% endif %}>Supervisor</option>
+        <option value="Department Head" {% if karyawan and karyawan.jabatan == 'Department Head' %}selected{% endif %}>Department Head</option>
+        <option value="Division Head" {% if karyawan and karyawan.jabatan == 'Division Head' %}selected{% endif %}>Division Head</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="gaji_pokok" class="form-label">Gaji Pokok</label>
+      <input type="number" class="form-control" id="gaji_pokok" name="gaji_pokok" value="{{ karyawan.gaji_pokok if karyawan else '' }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="tunjangan" class="form-label">Tunjangan</label>
+      <input type="number" class="form-control" id="tunjangan" name="tunjangan" value="{{ karyawan.tunjangan if karyawan else '' }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a href="{{ url_for('main.karyawan_list') }}" class="btn btn-secondary">Batal</a>
+  </form>
+</div>
+{% endblock %}

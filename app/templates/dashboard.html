@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - PT UAS HELGA{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard Admin</h2>
+<p>Selamat datang di sistem penggajian <strong>PT UAS HELGA</strong>.</p>
+
+<div class="container mt-4">
+  <div class="row text-center mb-4">
+
+    <div class="col-md-4 mb-3">
+      <div class="card border-primary shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Karyawan</h5>
+          <h3 class="text-primary">{{ total_karyawan }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="card border-success shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Gaji Dibayar</h5>
+          <h3 class="text-success">Rp {{ '{:,.0f}'.format(total_gaji_dibayar) }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="card border-warning shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Lembur</h5>
+          <h3 class="text-warning">{{ total_lembur }} Jam</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="card border-info shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Izin</h5>
+          <h3 class="text-info">{{ total_izin }} Karyawan</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="card border-secondary shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Beban Pajak</h5>
+          <h3 class="text-secondary">Rp {{ '{:,.0f}'.format(total_pajak) }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="card border-info shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Asuransi</h5>
+          <h3 class="text-info">Rp {{ '{:,.0f}'.format(total_asuransi) }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 mb-3">
+      <div class="card border-dark shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Beban Gaji (Gaji + Pajak + Asuransi)</h5>
+          <h3 class="text-dark">Rp {{ '{:,.0f}'.format(total_beban) }}</h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<h5 class="mb-3">Menu (Pilih Fitur)</h5>  
+<div class="row mt-4">
+  <div class="col-md-3 mb-3">
+    <a href="{{ url_for('main.karyawan_list') }}" class="btn btn-outline-primary w-100">Data Karyawan</a>
+  </div>
+  <div class="col-md-3 mb-3">
+    <a href="{{ url_for('main.absensi_list') }}" class="btn btn-outline-success w-100">Absensi</a>
+  </div>
+  <div class="col-md-3 mb-3">
+    <a href="{{ url_for('main.gaji_list') }}" class="btn btn-outline-warning w-100">Slip Gaji</a>
+  </div>
+  <div class="col-md-3 mb-3">
+    <a href="{{ url_for('main.laporan_bulanan') }}" class="btn btn-outline-dark w-100">Laporan Akhir</a>
+  </div>
+</div>
+
+<a href="{{ url_for('main.logout') }}" class="btn btn-danger mt-4">Logout</a>
+{% endblock %}

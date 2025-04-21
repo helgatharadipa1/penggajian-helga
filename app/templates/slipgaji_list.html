@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Slip Gaji - PT UAS HELGA{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Slip Gaji Karyawan</h2>
+<form method="GET" action="{{ url_for('main.gaji_list') }}" class="row g-3 align-items-end mb-3">
+    <div class="col-md-3">
+        <label for="bulan" class="form-label">Bulan</label>
+        <select name="bulan" class="form-select">
+            {% for b in ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] %}
+            <option value="{{ b }}" {% if b == selected_bulan %}selected{% endif %}>{{ b }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="tahun" class="form-label">Tahun</label>
+        <select name="tahun" class="form-select">
+            {% for y in range(2023, 2031) %}
+            <option value="{{ y }}" {% if y|string == selected_tahun %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-success w-100">Tampilkan</button>
+    </div>
+    <div class="col-md-3">
+        <a href="{{ url_for('main.hitung_gaji') }}" class="btn btn-primary w-100">+ Hitung Gaji Bulan Ini</a>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Nama</th>
+            <th>Bulan</th>
+            <th>Tahun</th>
+            <th>Total Gaji</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in data %}
+        <tr>
+            <td>{{ s.karyawan.nama }}</td>
+            <td>{{ s.bulan }}</td>
+            <td>{{ s.tahun }}</td>
+            <td>Rp {{ '{:,.0f}'.format(s.total_gaji) }}</td>
+            <td>
+                <a href="{{ url_for('main.gaji_detail', id=s.id) }}" class="btn btn-info btn-sm">Lihat Detail</a>
+                <a href="{{ url_for('main.hapus_gaji', id=s.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus slip gaji ini?')">Hapus</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('main.dashboard') }}" class="btn btn-secondary">Kembali ke Dashboard</a>
+{% endblock %}

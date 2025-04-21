@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Data Karyawan - PT UAS HELGA{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Data Karyawan</h2>
+<a href="{{ url_for('main.tambah_karyawan') }}" class="btn btn-primary mb-3">+ Tambah Karyawan</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Nama</th>
+            <th>Jabatan</th>
+            <th>Gaji Pokok</th>
+            <th>Tunjangan</th>
+            <th>Status</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for k in data %}
+        <tr>
+            <td>{{ k.nama }}</td>
+            <td>{{ k.jabatan }}</td>
+            <td>Rp {{ '{:,.0f}'.format(k.gaji_pokok) }}</td>
+            <td>Rp {{ '{:,.0f}'.format(k.tunjangan) }}</td>
+            <td>{{ k.status }}</td>
+            <td>
+                <a href="{{ url_for('main.edit_karyawan', id=k.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{{ url_for('main.hapus_karyawan', id=k.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('main.dashboard') }}" class="btn btn-secondary">Kembali ke Dashboard</a>
+{% endblock %}

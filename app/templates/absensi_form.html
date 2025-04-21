@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Form Absensi - PT UAS HELGA{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">{{ action }} Data Absensi</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">Nama Karyawan</label>
+        <select name="karyawan_id" class="form-control" required>
+            {% for k in karyawan_list %}
+            <option value="{{ k.id }}" {% if absen and absen.karyawan_id == k.id %}selected{% endif %}>{{ k.nama }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Tanggal</label>
+        <input type="date" name="tanggal" class="form-control" required value="{{ absen.tanggal.strftime('%Y-%m-%d') if absen else '' }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Status</label>
+        <select name="status" class="form-control" required>
+            {% set status_list = ['Hadir', 'Izin', 'Cuti', 'Sakit'] %}
+            {% for s in status_list %}
+            <option value="{{ s }}" {% if absen and absen.status == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-check mb-3">
+        <input type="checkbox" name="lembur" class="form-check-input" id="lemburCheck" {% if absen and absen.lembur %}checked{% endif %}>
+        <label for="lemburCheck" class="form-check-label">Lembur</label>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Jam Lembur</label>
+        <input type="number" name="jam_lembur" class="form-control" value="{{ absen.jam_lembur if absen else '0' }}">
+    </div>
+    <button type="submit" class="btn btn-success">Simpan</button>
+    <a href="{{ url_for('main.absensi_list') }}" class="btn btn-secondary">Kembali</a>
+</form>
+{% endblock %}

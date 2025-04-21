@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Laporan Akhir Bulanan - PT UAS HELGA{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Laporan Akhir Bulanan</h2>
+
+{% if not pdf_mode %}
+<form method="GET" action="{{ url_for('main.laporan_bulanan') }}" class="row g-3 align-items-end mb-4">
+    <div class="col-md-3">
+        <label for="bulan" class="form-label">Bulan</label>
+        <select name="bulan" class="form-select" id="bulan">
+            {% for b in ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'] %}
+            <option value="{{ b }}" {% if b == selected_bulan %}selected{% endif %}>{{ b }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="tahun" class="form-label">Tahun</label>
+        <select name="tahun" class="form-select" id="tahun">
+            {% for y in range(2023, 2031) %}
+            <option value="{{ y }}" {% if y|string == selected_tahun %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-success w-100">Tampilkan</button>
+    </div>
+</form>
+{% endif %}
+
+{% if selected_bulan and selected_tahun %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Rekapitulasi {{ selected_bulan }} {{ selected_tahun }}</h5>
+        <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between">Total Gaji Dibayarkan <span>Rp {{ '{:,.0f}'.format(total_gaji) }}</span></li>
+            <li class="list-group-item d-flex justify-content-between">Total Pajak Dipotong <span>Rp {{ '{:,.0f}'.format(total_pajak) }}</span></li>
+            <li class="list-group-item d-flex justify-content-between">Total Asuransi <span>Rp {{ '{:,.0f}'.format(total_asuransi) }}</span></li>
+            <li class="list-group-item d-flex justify-content-between">Jumlah Karyawan <span>{{ jumlah_karyawan }}</span></li>
+        </ul>
+        {% if not pdf_mode %}
+        <a href="{{ url_for('main.export_laporan_pdf', bulan=selected_bulan, tahun=selected_tahun) }}" class="btn btn-outline-primary">Export PDF</a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+{% if not pdf_mode %}
+<a href="{{ url_for('main.dashboard') }}" class="btn btn-secondary mt-4">Kembali ke Dashboard</a>
+{% endif %}
+{% endblock %}

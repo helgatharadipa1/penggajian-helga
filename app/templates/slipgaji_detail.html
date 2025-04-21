@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Detail Slip Gaji - PT UAS HELGA{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Detail Slip Gaji</h2>
+<table class="table table-bordered">
+    <tr>
+        <th>Nama</th>
+        <td>{{ s.karyawan.nama }}</td>
+    </tr>
+    <tr>
+        <th>Bulan</th>
+        <td>{{ s.bulan }} {{ s.tahun }}</td>
+    </tr>
+    <tr>
+        <th>Gaji Pokok</th>
+        <td>Rp {{ '{:,.0f}'.format(s.gaji_pokok) }}</td>
+    </tr>
+    <tr>
+        <th>Tunjangan</th>
+        <td>Rp {{ '{:,.0f}'.format(s.tunjangan) }}</td>
+    </tr>
+    <tr>
+        <th>Upah Lembur</th>
+        <td>Rp {{ '{:,.0f}'.format(s.lembur) }}</td>
+    </tr>
+    <tr>
+        <th>Potongan (izin/sakit/cuti)</th>
+        <td>Rp {{ '{:,.0f}'.format(s.potongan) }}</td>
+    </tr>
+    <tr>
+        <th>Pajak Penghasilan (PPh 21)</th>
+        <td>Rp {{ '{:,.0f}'.format(s.pajak) }}</td>
+    </tr>
+    <tr>
+        <th>Asuransi Kesehatan</th>
+        <td>Rp {{ '{:,.0f}'.format(s.asuransi) }}</td>
+    </tr>
+    <tr class="table-success">
+        <th>Total Gaji Diterima</th>
+        <td><strong>Rp {{ '{:,.0f}'.format(s.total_gaji) }}</strong></td>
+    </tr>
+</table>
+<a href="{{ url_for('main.export_pdf', id=s.id) }}" class="btn btn-outline-primary">Export PDF</a>
+<a href="{{ url_for('main.gaji_list') }}" class="btn btn-secondary">Kembali</a>
+{% endblock %}
